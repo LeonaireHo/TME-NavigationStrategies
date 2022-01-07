@@ -71,14 +71,13 @@ def strategyGating(arbitrationMethod,verbose=True):
   global lastChooseTime
   # The chosen gating strategy is to be coded here:
   #------------------------------------------------
-  print(arbitrationMethod)
+  # print(arbitrationMethod)
   if arbitrationMethod=='random':
     choice = random.randrange(2)
   #------------------------------------------------
   elif arbitrationMethod=='randomPersist':
-    print(lastChooseTime)
     if time.time() - lastChooseTime >= 2:
-      print(lastChooseTime)
+      # print(lastChooseTime)
       lastChooseTime = time.time()
       choice = random.randrange(2)
   #------------------------------------------------
@@ -93,10 +92,9 @@ def strategyGating(arbitrationMethod,verbose=True):
       lastChooseTime = time.time()
       delta = rew + gamma * np.max(Qtable[S_t]) - Qtable[S_tm1][choice_tm1]
       Qtable[S_tm1][choice_tm1] += alpha * delta
-      if rew != 0:
-        rew = 0
-      choice_tm1 = choice
 
+      choice_tm1 = choice
+      rew = 0
   #------------------------------------------------
   else:
     print(arbitrationMethod+' unknown.')
@@ -142,7 +140,6 @@ def main(argv):
   global S_t
   global S_tm1
   global rew
-  print('Test')
   settings = Settings('worlds/entonnoir.xml')
 
   env_map = settings.map()
@@ -192,6 +189,7 @@ def main(argv):
         np.savetxt('log/' + str(startT) + '-Trial-' + str(trial) + '-Positions-' + method + '.txt', np.array(list_pos))
       trial +=1
       rew = 1
+      list_pos = []
 
     # get the sensor inputs:
     #------------------------------------

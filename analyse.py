@@ -122,29 +122,29 @@ def stats_durations(l):
 
 if __name__ == '__main__':
     a = read_durations('1641418414.6273637-TrialDurations-randomPersist.txt')
-    # print('1641418414.6273637-TrialDurations-randomPersist.txt :')
-    # q1, m, q3 = percentiles(a)
-    # print('q1 :', q1, 'm :', m, 'q3 :', q3)
-    # b = read_positions("Thu Jan  6 08:41:16 2022*-Trial-*")
-    # fp = first_positions(b)
-    # lp = last_positions(b)
-    # np.savetxt('histoDebut.csv', fp, delimiter=',')
-    # np.savetxt('histoFin.csv', lp, delimiter=',')
-    # draw_hist('histoDebut.csv')
-    # draw_hist('histoFin.csv')
-    # print('histoDebut.csv, histoFin.csv et leurs histo. sont sauvés.')
-    # q = read_npy('Thu Jan  6 08:41:16 2022-TrialQvalues-qlearning.npy')
-    # keys = ['00002', '00072', '00000', '00070', '11101', '11171']
-    # q = q.flatten()[0]
-    #
-    # for key in keys:
-    #     print(key, ':', q[key])
-    #
-    # d = draw_durations('*TrialDurations-qlearning*')
-    # stats_durations(d)
-    #
+    print('1641418414.6273637-TrialDurations-randomPersist.txt :')
+    q1, m, q3 = percentiles(a)
+    print('q1 :', q1, 'm :', m, 'q3 :', q3)
+    b = read_positions("Thu Jan  6 08:41:16 2022*-Trial-*")
+    fp = first_positions(b)
+    lp = last_positions(b)
+    np.savetxt('histoDebut.csv', fp, delimiter=',')
+    np.savetxt('histoFin.csv', lp, delimiter=',')
+    draw_hist('histoDebut.csv')
+    draw_hist('histoFin.csv')
+    print('histoDebut.csv, histoFin.csv et leurs histo. sont sauvés.')
+    q = read_npy('Thu Jan  6 08:41:16 2022-TrialQvalues-qlearning.npy')
+    keys = ['00002', '00072', '00000', '00070', '11101', '11171']
+    q = q.flatten()[0]
 
-    print(percentiles(a))
+    for key in keys:
+        print(key, ':', q[key])
+
+    d = draw_durations('*TrialDurations-qlearning*')
+    stats_durations(d)
+
+
+    # print(percentiles(a))
 
 
 
