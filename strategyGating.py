@@ -117,7 +117,7 @@ def main():
   global S_t
   global S_tm1
   global rew
-
+  print('Test')
   settings = Settings('worlds/entonnoir.xml')
 
   env_map = settings.map()
