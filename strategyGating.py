@@ -9,6 +9,8 @@ import numpy as np
 import math
 import time
 
+
+
 #--------------------------------------
 # Position of the goal:
 goalx = 300
