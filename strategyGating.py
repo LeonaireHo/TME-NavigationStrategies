@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import collections
 
 from radarGuidance import *
 from wallFollower import *
@@ -53,6 +54,17 @@ S_tm1 = ''
 # * arbitrationMethod: how to select? 'random','randPersist','qlearning'
 global lastChooseTime
 lastChooseTime = 0
+Qtable = collections.defaultdict(lambda : np.zeros(2))
+
+
+
+def softmax(q):
+  beta = 4
+  a = beta * np.array(q)
+  a = np.exp(a) / sum(np.exp(a))
+  if np.random.rand() < a[0]:
+    return 0
+  return 1
 
 def strategyGating(arbitrationMethod,verbose=True):
   global choice
@@ -74,7 +86,17 @@ def strategyGating(arbitrationMethod,verbose=True):
       choice = random.randrange(2)
   #------------------------------------------------
   elif arbitrationMethod=='qlearning':
-    print('Q-Learning selection : to be implemented')
+    gamma = 0.95
+    alpha = 0.4
+    if lastChooseTime - time.time() <= -2:
+      choice = softmax(Qtable[S_t])
+      lastChooseTime = time.time()
+      delta = rew + gamma * np.max(Qtable[S_t]) - Qtable[S_tm1][choice_tm1]
+      Qtable[S_tm1][choice_tm1] += alpha * delta
+      if rew != 0:
+        rew = 0
+      choice_tm1 = choice
+
   #------------------------------------------------
   else:
     print(arbitrationMethod+' unknown.')
@@ -132,19 +154,23 @@ def main(argv):
   # experiment related stuff
   startT = time.time()
   trial = 0
-  nbTrials = 40
+  nbTrials = 20
   trialDuration = np.zeros((nbTrials))
-
+  list_pos = []
   i = 0
   while trial<nbTrials:
     # update the display
     #-------------------------------------
     d.update()
     # get position data from the simulation
+    pos = robot.get_pos()
+    next_time = time.time()
     #-------------------------------------
     pos = robot.get_pos()
     # print("##########\nStep "+str(i)+" robot pos: x = "+str(int(pos.x()))+" y = "+str(int(pos.y()))+" theta = "+str(int(pos.theta()/math.pi*180.)))
-
+    if next_time - prev_time >= 1 or trial == 0:
+    	list_pos.append([pos.x(), pos.y(), pos.theta() / math.pi * 180.])
+    	prev_time = next_time
     # has the robot found the reward ?
     #------------------------------------
     dist2goal = math.sqrt((pos.x()-goalx)**2+(pos.y()-goaly)**2)
@@ -159,6 +185,8 @@ def main(argv):
       trialDuration[trial] = currT - startT
       startT = currT
       print("Trial "+str(trial)+" duration:"+str(trialDuration[trial]))
+
+
       trial +=1
       rew = 1
 
