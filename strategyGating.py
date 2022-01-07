@@ -154,7 +154,7 @@ def main(argv):
   # experiment related stuff
   startT = time.time()
   trial = 0
-  nbTrials = 20
+  nbTrials = 40
   trialDuration = np.zeros((nbTrials))
   list_pos = []
   i = 0
