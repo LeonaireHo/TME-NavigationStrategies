@@ -229,7 +229,7 @@ def main(argv):
   # When the experiment is over:
   f = open('log/'+str(startT)+'-TrialDurations-'+method+'.txt','w')
   f.close()
-  if arbitrationMethod == 'qlearning':
+  if method == 'qlearning':
     f = open('log/' + str(startT) + '-TrialQvalues-'+method+'.npy','w')
     f.close()
   np.savetxt('log/'+str(startT)+'-TrialDurations-'+method+'.txt',trialDuration)
