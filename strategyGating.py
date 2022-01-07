@@ -7,6 +7,7 @@ import random #used for the random choice of a strategy
 import sys
 import numpy as np
 import math
+import time
 
 #--------------------------------------
 # Position of the goal:
@@ -48,19 +49,24 @@ S_tm1 = ''
 # the function that selects which controller (radarGuidance or wallFollower) to use
 # sets the global variable "choice" to 0 (wallFollower) or 1 (radarGuidance)
 # * arbitrationMethod: how to select? 'random','randPersist','qlearning'
+global lastChooseTime
+lastChooseTime = 0
+
 def strategyGating(arbitrationMethod,verbose=True):
   global choice
   global choice_tm1
   global tLastChoice
   global rew
-
+  global lastChooseTime
   # The chosen gating strategy is to be coded here:
   #------------------------------------------------
   if arbitrationMethod=='random':
     choice = random.randrange(2)
   #------------------------------------------------
   elif arbitrationMethod=='randomPersist':
-    print('Persistent Random selection : to be implemented')
+    if lastChooseTime - time.time() <= -2 :
+      lastChooseTime = time.time()
+      choice = random.randrange(2)
   #------------------------------------------------
   elif arbitrationMethod=='qlearning':
     print('Q-Learning selection : to be implemented')
