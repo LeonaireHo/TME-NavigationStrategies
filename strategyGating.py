@@ -202,4 +202,4 @@ def main(args):
 
 if __name__ == '__main__':
   random.seed()
-  main()
+  main(args)
