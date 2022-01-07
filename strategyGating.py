@@ -56,8 +56,6 @@ global lastChooseTime
 lastChooseTime = 0
 Qtable = collections.defaultdict(lambda : np.zeros(2))
 
-
-
 def softmax(q):
   beta = 4
   a = beta * np.array(q)
@@ -80,7 +78,7 @@ def strategyGating(arbitrationMethod,verbose=True):
   #------------------------------------------------
   elif arbitrationMethod=='randomPersist':
     print(lastChooseTime)
-    if lastChooseTime - time.time() <= -2:
+    if time.time() - lastChooseTime >= 2:
       print(lastChooseTime)
       lastChooseTime = time.time()
       choice = random.randrange(2)
@@ -88,7 +86,7 @@ def strategyGating(arbitrationMethod,verbose=True):
   elif arbitrationMethod=='qlearning':
     gamma = 0.95
     alpha = 0.4
-    if lastChooseTime - time.time() <= -2:
+    if time.time() - lastChooseTime >= 2:
       choice = softmax(Qtable[S_t])
       lastChooseTime = time.time()
       delta = rew + gamma * np.max(Qtable[S_t]) - Qtable[S_tm1][choice_tm1]
@@ -154,7 +152,7 @@ def main(argv):
   # experiment related stuff
   startT = time.time()
   trial = 0
-  nbTrials = 20
+  nbTrials = 1
   trialDuration = np.zeros((nbTrials))
   list_pos = []
   i = 0
@@ -187,7 +185,7 @@ def main(argv):
       startT = currT
       print("Trial "+str(trial)+" duration:"+str(trialDuration[trial]))
 
-
+      np.savetxt('log/' + str(startT) + '-Trial-' + str(trial) + '-Positions-' + method + '.txt', np.array(list_pos))
       trial +=1
       rew = 1
 
@@ -227,7 +225,13 @@ def main(argv):
     time.sleep(0.01)
 
   # When the experiment is over:
+  f = open('log/'+str(startT)+'-TrialDurations-'+method+'.txt','w')
+  f.close()
+  f = open('log/' + str(startT) + '-TrialQvalues-'+method+'.npy','w')
+  f.close()
   np.savetxt('log/'+str(startT)+'-TrialDurations-'+method+'.txt',trialDuration)
+  if method == 'qlearning':
+    np.save('log/' + str(startT) + '-TrialQvalues-'+method+'.npy', Qtable)
 
 #--------------------------------------
 
