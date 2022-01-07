@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import collections
+import os
 
 from radarGuidance import *
 from wallFollower import *
@@ -228,6 +229,10 @@ def main(argv):
 
   # When the experiment is over:
   f = open('log/'+str(startT)+'-TrialDurations-'+method+'.txt','w')
+  if os.path.exists('log/'+str(startT)+'-TrialDurations-'+method+'.txt'):
+    print('文件建立成功')
+  else:
+    print('建立失败')
   f.close()
   if method == 'qlearning':
     f = open('log/' + str(startT) + '-TrialQvalues-'+method+'.npy','w')
