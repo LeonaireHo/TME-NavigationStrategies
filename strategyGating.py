@@ -184,8 +184,10 @@ def main(argv):
       trialDuration[trial] = currT - startT
       startT = currT
       print("Trial "+str(trial)+" duration:"+str(trialDuration[trial]))
-
-      np.savetxt('log/' + str(startT) + '-Trial-' + str(trial) + '-Positions-' + method + '.txt', np.array(list_pos))
+      if method == 'qlearning':
+        f = open('log/' + str(startT) + '-Trial-' + str(trial) + '-Positions-' + method + '.txt', 'w')
+        f.close()
+        np.savetxt('log/' + str(startT) + '-Trial-' + str(trial) + '-Positions-' + method + '.txt', np.array(list_pos))
       trial +=1
       rew = 1
 
@@ -227,8 +229,9 @@ def main(argv):
   # When the experiment is over:
   f = open('log/'+str(startT)+'-TrialDurations-'+method+'.txt','w')
   f.close()
-  f = open('log/' + str(startT) + '-TrialQvalues-'+method+'.npy','w')
-  f.close()
+  if arbitrationMethod == 'qlearning':
+    f = open('log/' + str(startT) + '-TrialQvalues-'+method+'.npy','w')
+    f.close()
   np.savetxt('log/'+str(startT)+'-TrialDurations-'+method+'.txt',trialDuration)
   if method == 'qlearning':
     np.save('log/' + str(startT) + '-TrialQvalues-'+method+'.npy', Qtable)
