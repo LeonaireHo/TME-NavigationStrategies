@@ -167,6 +167,7 @@ def main(argv):
     next_time = time.time()
     #-------------------------------------
     pos = robot.get_pos()
+    prev_time = 0
     # print("##########\nStep "+str(i)+" robot pos: x = "+str(int(pos.x()))+" y = "+str(int(pos.y()))+" theta = "+str(int(pos.theta()/math.pi*180.)))
     if next_time - prev_time >= 1 or trial == 0:
     	list_pos.append([pos.x(), pos.y(), pos.theta() / math.pi * 180.])
