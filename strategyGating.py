@@ -230,6 +230,10 @@ def main(argv):
 
 
   np.savetxt('log/'+str(startT)+'-TrialDurations-'+method+'.txt',trialDuration)
+
+  res = dict()
+  for key in Qtable:
+    res[key] = Qtable[key]
   if method == 'qlearning':
     np.save('log/' + str(startT) + '-TrialQvalues-'+method+'.npy', Qtable)
 
