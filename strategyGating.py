@@ -114,7 +114,7 @@ def buildStateFromSensors(laserRanges,radar,dist2goal):
   return S
 
 #--------------------------------------
-def main():
+def main(args):
   global S_t
   global S_tm1
   global rew
@@ -126,7 +126,7 @@ def main():
 
   d = Display(env_map, robot)
 
-  method = 'random'
+  method = args[0]
   # experiment related stuff
   startT = time.time()
   trial = 0
