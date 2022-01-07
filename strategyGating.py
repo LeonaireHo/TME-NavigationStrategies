@@ -229,7 +229,8 @@ def main(argv):
 
   # When the experiment is over:
 
-  np.savetxt('log/1-TrialDurations-'+method+'.txt',trialDuration)
+
+  np.savetxt('log/'+str(startT)+'-TrialDurations-'+method+'.txt',trialDuration)
   if method == 'qlearning':
     np.save('log/' + str(startT) + '-TrialQvalues-'+method+'.npy', Qtable)
 
