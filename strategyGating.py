@@ -234,10 +234,17 @@ def main(argv):
   np.savetxt('log/'+str(startT)+'-TrialDurations-'+method+'.txt',trialDuration)
 
   res = dict()
+  aux = {}
   for key in Qtable:
+    print('key:', Qtable[key])
+  for key in Qtable:
+    if key in ['00002','00072','00000','00070','11101','11171']:
+      aux[key] = Qtable[key]
     res[key] = Qtable[key]
+    print('key:', Qtable[key])
+  print(aux)
   if method == 'qlearning':
-    np.save('log/' + str(startT) + '-TrialQvalues-'+method+'.npy', Qtable)
+    np.save('log/' + str(startT) + '-TrialQvalues-'+method+'.npy', res)
 
 #--------------------------------------
 
