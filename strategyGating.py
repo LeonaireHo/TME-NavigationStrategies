@@ -59,11 +59,9 @@ Qtable = collections.defaultdict(lambda : np.zeros(2))
 
 def softmax(q):
   beta = 4
-  a = beta * np.array(q)
-  a = np.exp(a) / sum(np.exp(a))
-  if np.random.rand() < a[0]:
-    return 0
-  return 1
+  p = beta * np.array(q)
+  p = np.exp(p) / sum(np.exp(p))
+  return p
 
 def strategyGating(arbitrationMethod,verbose=True):
   global choice
@@ -88,7 +86,10 @@ def strategyGating(arbitrationMethod,verbose=True):
     gamma = 0.95
     alpha = 0.4
     if time.time() - lastChooseTime >= 2:
-      choice = softmax(Qtable[S_t])
+      p = softmax(Qtable[S_t])
+      choice = 1
+      if np.random.rand() < p[0]:
+        choice = 0
       lastChooseTime = time.time()
       delta = rew + gamma * np.max(Qtable[S_t]) - Qtable[S_tm1][choice_tm1]
       Qtable[S_tm1][choice_tm1] += alpha * delta
