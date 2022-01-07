@@ -126,7 +126,7 @@ def main(argv):
 
   d = Display(env_map, robot)
 
-  method = argv[0]
+  method = argv[1]
   # experiment related stuff
   startT = time.time()
   trial = 0
