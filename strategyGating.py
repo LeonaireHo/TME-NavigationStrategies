@@ -64,7 +64,8 @@ def strategyGating(arbitrationMethod,verbose=True):
     choice = random.randrange(2)
   #------------------------------------------------
   elif arbitrationMethod=='randomPersist':
-    if lastChooseTime - time.time() <= -2 :
+    if lastChooseTime - time.time() <= -2:
+      print(lastChooseTime)
       lastChooseTime = time.time()
       choice = random.randrange(2)
   #------------------------------------------------
