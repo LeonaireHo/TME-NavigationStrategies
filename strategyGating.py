@@ -186,7 +186,7 @@ def main(argv):
       startT = currT
       print("Trial "+str(trial)+" duration:"+str(trialDuration[trial]))
       if method == 'qlearning':
-        f = open('log/' + str(startT) + '-Trial-' + str(trial) + '-Positions-' + method + '.txt', 'w')
+        f = open('log/' + str(startT) + '-Trial-' + str(trial) + '-Positions-' + method + '.txt', 'w+')
         f.close()
         np.savetxt('log/' + str(startT) + '-Trial-' + str(trial) + '-Positions-' + method + '.txt', np.array(list_pos))
       trial +=1
@@ -228,14 +228,14 @@ def main(argv):
     time.sleep(0.01)
 
   # When the experiment is over:
-  f = open('log/'+str(startT)+'-TrialDurations-'+method+'.txt','w')
+  f = open('log/'+str(startT)+'-TrialDurations-'+method+'.txt','w+')
   if os.path.exists('log/'+str(startT)+'-TrialDurations-'+method+'.txt'):
     print('文件建立成功')
   else:
     print('建立失败')
   f.close()
   if method == 'qlearning':
-    f = open('log/' + str(startT) + '-TrialQvalues-'+method+'.npy','w')
+    f = open('log/' + str(startT) + '-TrialQvalues-'+method+'.npy','w+')
     f.close()
   np.savetxt('log/'+str(startT)+'-TrialDurations-'+method+'.txt',trialDuration)
   if method == 'qlearning':
