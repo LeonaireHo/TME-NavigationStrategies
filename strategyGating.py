@@ -60,6 +60,7 @@ def strategyGating(arbitrationMethod,verbose=True):
   global lastChooseTime
   # The chosen gating strategy is to be coded here:
   #------------------------------------------------
+  print(arbitrationMethod)
   if arbitrationMethod=='random':
     choice = random.randrange(2)
   #------------------------------------------------
